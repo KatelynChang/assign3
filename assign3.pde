@@ -19,10 +19,11 @@ boolean rightPressed = false;
 int hpLong;
 
 //enemy
-int enemyX1, enemyX2, enemyX3, enemyY1, enemyY2;
+int enemyX1, enemyX2, enemyX3, enemyY1, enemyY2, enemyY3; 
 int enemyWidth, enemyHeight;
 int enemySpeed;
 int enemySpacing;
+
 
 //treasure
 int treasureX, treasureY;
@@ -59,13 +60,15 @@ void setup(){
   hpLong = 50;
   
   //enemy
-  enemyX1=0; enemyX2=-1000; enemyX3=0;
+  enemyX1=0; enemyX2=-(640+enemyWidth*5+enemySpacing*4+300); enemyX3=-(640*2+enemyWidth*5+enemySpacing*4+600);
   enemyY1 = floor(random(0,480-61));
   enemyY2 = floor(random(0,480-61*5));
+  enemyY3 = floor(random(0,480-61*5));
   enemySpeed = 5;
   enemyWidth = 61;
   enemyHeight = 61;
   enemySpacing = 2;
+
   
   //treasure
   treasureX = floor(random(0,640-41));
@@ -144,7 +147,7 @@ void draw(){
     enemyY1 = floor(random(0,480-61));}
     
     enemyX1+=enemySpeed;
-    enemyX1 %= 640+enemyWidth*5+enemySpacing*4+700;
+    enemyX1 %= 640+640+enemyWidth*5+enemySpacing*4+300+640*2+enemyWidth*5+enemySpacing*4;
     
     //level B
     if(enemyX2<width){
@@ -156,8 +159,53 @@ void draw(){
   }
    if(enemyX2>width){
    enemyY2 = floor(random(0,480-61*5));}
+   
    enemyX2+=enemySpeed;
-   enemyX2 %= 640+enemyWidth*5+enemySpacing*4+640;
+   enemyX2 %= 640+640+enemyWidth*5+enemySpacing*4+300+640*2+enemyWidth*5+enemySpacing*4;
+   
+   
+   //level A
+   int Xmoving = -(enemyWidth*4+enemySpacing*4);
+   int Ymoving = enemyHeight*4/2;
+   
+   if(enemyX3<width){
+     for(int row=0; row<5; row++){
+     int tmpx3 = enemyX3+row*(enemyWidth+enemySpacing);
+     int tmpy3 = enemyY3+row*(enemyHeight/2);
+     image (enemy1, tmpx3, tmpy3);}
+   }
+   
+   if(enemyX3<(width+enemyWidth*4)){
+     for(int row=0; row<5; row++){
+     int tmpx3 = Xmoving+enemyX3+row*(enemyWidth+enemySpacing);
+     int tmpy3 = Ymoving+enemyY3+row*(enemyHeight/2);
+     image (enemy1, tmpx3, tmpy3);}
+   }
+   
+   if(enemyX3<(width+enemyWidth*4)){
+     for(int row=0; row<4; row++){
+     int tmpx3 = enemyX3-row*(enemyWidth+enemySpacing);
+     int tmpy3 = enemyY3+row*(enemyHeight/2);
+     image (enemy1, tmpx3, tmpy3);}
+   }
+   
+   if(enemyX3<(width+enemyWidth*4)){
+     for(int row=0; row<4; row++){
+     int tmpx3 = -Xmoving+enemyX3-row*(enemyWidth+enemySpacing);
+     int tmpy3 = Ymoving+enemyY3+row*(enemyHeight/2);
+     image (enemy1, tmpx3, tmpy3);}
+   }
+   
+    if(enemyX3>(width+enemyWidth*4)){
+   enemyY3 = floor(random(0,480-enemyHeight*5));}
+   
+   enemyX3 += enemySpeed;
+   enemyX3 %= 640+640+enemyWidth*5+enemySpacing*4+300+640*2+enemyWidth*5+enemySpacing*4;
+   
+  
+   
+   
+ 
     
     
    
@@ -194,9 +242,9 @@ void draw(){
     }
     else{image(end2,0,0);}
     break;
-
   }
 }
+
 
 
 void keyPressed(){
