@@ -147,7 +147,7 @@ void draw(){
     enemyY1 = floor(random(0,480-61));}
     
     enemyX1+=enemySpeed;
-    enemyX1 %= 640+640+enemyWidth*5+enemySpacing*4+300+640*2+enemyWidth*5+enemySpacing*4;
+    enemyX1 %= 640+640+enemyWidth*5+enemySpacing*4+300+640*2+enemyWidth*5+enemySpacing*2;
     
     //level B
     if(enemyX2<width){
@@ -161,46 +161,46 @@ void draw(){
    enemyY2 = floor(random(0,480-61*5));}
    
    enemyX2+=enemySpeed;
-   enemyX2 %= 640+640+enemyWidth*5+enemySpacing*4+300+640*2+enemyWidth*5+enemySpacing*4;
+   enemyX2 %= 640+640+enemyWidth*5+enemySpacing*4+300+640*2+enemyWidth*5+enemySpacing*2;
    
    
    //level A
-   int Xmoving = -(enemyWidth*4+enemySpacing*4);
-   int Ymoving = enemyHeight*4/2;
+   int Xmoving = -(enemyWidth*2+enemySpacing*2);
+   int Ymoving = enemyHeight*2;
    
    if(enemyX3<width){
-     for(int row=0; row<5; row++){
+     for(int row=0; row<3; row++){
      int tmpx3 = enemyX3+row*(enemyWidth+enemySpacing);
-     int tmpy3 = enemyY3+row*(enemyHeight/2);
+     int tmpy3 = enemyY3+row*(enemyHeight);
      image (enemy1, tmpx3, tmpy3);}
    }
    
-   if(enemyX3<(width+enemyWidth*4)){
-     for(int row=0; row<5; row++){
+   if(enemyX3<(width+enemyWidth*2)){
+     for(int row=0; row<3; row++){
      int tmpx3 = Xmoving+enemyX3+row*(enemyWidth+enemySpacing);
-     int tmpy3 = Ymoving+enemyY3+row*(enemyHeight/2);
+     int tmpy3 = Ymoving+enemyY3+row*(enemyHeight);
      image (enemy1, tmpx3, tmpy3);}
    }
    
-   if(enemyX3<(width+enemyWidth*4)){
-     for(int row=0; row<4; row++){
+   if(enemyX3<(width+enemyWidth*2)){
+     for(int row=0; row<2; row++){
      int tmpx3 = enemyX3-row*(enemyWidth+enemySpacing);
-     int tmpy3 = enemyY3+row*(enemyHeight/2);
+     int tmpy3 = enemyY3+row*(enemyHeight);
      image (enemy1, tmpx3, tmpy3);}
    }
    
-   if(enemyX3<(width+enemyWidth*4)){
-     for(int row=0; row<4; row++){
+   if(enemyX3<(width+enemyWidth*2)){
+     for(int row=0; row<2; row++){
      int tmpx3 = -Xmoving+enemyX3-row*(enemyWidth+enemySpacing);
-     int tmpy3 = Ymoving+enemyY3+row*(enemyHeight/2);
+     int tmpy3 = Ymoving+enemyY3+row*(enemyHeight);
      image (enemy1, tmpx3, tmpy3);}
    }
    
-    if(enemyX3>(width+enemyWidth*4)){
+    if(enemyX3>(width+enemyWidth*2)){
    enemyY3 = floor(random(0,480-enemyHeight*5));}
    
    enemyX3 += enemySpeed;
-   enemyX3 %= 640+640+enemyWidth*5+enemySpacing*4+300+640*2+enemyWidth*5+enemySpacing*4;
+   enemyX3 %= 640+640+enemyWidth*5+enemySpacing*4+300+640*2+enemyWidth*5+enemySpacing*2;
    
   
    
