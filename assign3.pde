@@ -19,10 +19,14 @@ boolean rightPressed = false;
 int hpLong;
 
 //enemy
-int enemyX1, enemyX2, enemyX3, enemyY1, enemyY2, enemyY3; 
+int [] enemyC = new int [5];
+int [] enemyB = new int [5];
+int [] enemyA = new int [8]; 
+int enemyY1, enemyY2, enemyY3; 
 int enemyWidth, enemyHeight;
 int enemySpeed;
 int enemySpacing;
+boolean showing = true;
 
 
 //treasure
@@ -60,10 +64,11 @@ void setup(){
   hpLong = 50;
   
   //enemy
-  enemyX1=0; enemyX2=-(640+enemyWidth*5+enemySpacing*4+300); enemyX3=-(640*2+enemyWidth*5+enemySpacing*4+600);
-  enemyY1 = floor(random(0,480-61));
-  enemyY2 = floor(random(0,480-61*5));
-  enemyY3 = floor(random(0,480-61*5));
+  enemyB[1]=-(width+enemyWidth*5+enemySpacing*4+250);
+  enemyA[0]=-(width*2+enemyWidth*5+enemySpacing*4+600);
+  enemyY1 = floor(random(0,height-enemyHeight));
+  enemyY2 = floor(random(0,height-enemyHeight*5));
+  enemyY3 = floor(random(enemyHeight*2,height-enemyHeight*5));
   enemySpeed = 5;
   enemyWidth = 61;
   enemyHeight = 61;
@@ -136,72 +141,93 @@ void draw(){
     
     //enemy
     
-    //level C
-    if(enemyX1<width){
-      for(int row=0; row<5; row++){
-      int tmpx = enemyX1+row*(enemyWidth+enemySpacing);
-      image (enemy1,tmpx,enemyY1);
-      }
-    }
-    if(enemyX1>width){
-    enemyY1 = floor(random(0,480-61));}
     
-    enemyX1+=enemySpeed;
-    enemyX1 %= 640+640+enemyWidth*5+enemySpacing*4+300+640*2+enemyWidth*5+enemySpacing*2;
+    //level C
+    for(int i=0; i<enemyC.length; i++){
+      int x = enemyC[1]-i*(enemyWidth+enemySpacing);
+      image(enemy1,x,enemyY1);
+      if(fighterX >= x && fighterX <= x+enemyWidth && fighterY >= enemyY1 && fighterY <= enemyY1+enemyHeight){
+        hpLong -= 20;showing=false;}
+      else if(fighterX+51 >= x && fighterX+51 <= x+enemyWidth && fighterY+51 >= enemyY1 && fighterY+51 <= enemyY1+enemyHeight){
+        hpLong -= 20;showing=false;}
+        
+    }
+    
+    if(enemyC[4]>width){
+    enemyY1 = floor(random(0,height-enemyHeight));}
+    enemyC[1] += enemySpeed;
+    enemyC[1] %= width*3+enemyWidth*10+enemySpacing*6+100;
+    
+ 
     
     //level B
-    if(enemyX2<width){
-      for(int row=0; row<5; row++){
-      int tmpx2 = enemyX2+row*(enemyWidth+enemySpacing);
-      int tmpy2 = enemyY2+row*(enemyHeight);
-      image (enemy1,tmpx2,tmpy2);
+    for(int i=0; i <enemyB.length; i++){
+      int x = enemyB[1]-i*(enemyWidth+enemySpacing);
+      int y = enemyY2+i*(enemyHeight);
+      image(enemy1,x,y);
+       if(fighterX >= x && fighterX <= x+enemyWidth && fighterY >= y && fighterY <= y+enemyHeight){
+        hpLong -= 20;}
+      else if(fighterX+51 >= x && fighterX+51 <= x+enemyWidth && fighterY+51 >= y && fighterY+51 <= y+enemyHeight){
+        hpLong -= 20;} 
     }
-  }
-   if(enemyX2>width){
-   enemyY2 = floor(random(0,480-61*5));}
-   
-   enemyX2+=enemySpeed;
-   enemyX2 %= 640+640+enemyWidth*5+enemySpacing*4+300+640*2+enemyWidth*5+enemySpacing*2;
-   
+    
+    if(enemyB[4]>width){
+    enemyY2 = floor(random(0,height-enemyHeight*5));}
+    enemyB[1] += enemySpeed;
+    enemyB[1] %= width*3+(enemyWidth*10+enemySpacing*6);
+    
+ 
    
    //level A
-   int Xmoving = -(enemyWidth*2+enemySpacing*2);
-   int Ymoving = enemyHeight*2;
+   int Xmoving = enemyWidth*2+enemySpacing*2;
+   int Ymoving = -enemyHeight*2;
    
-   if(enemyX3<width){
-     for(int row=0; row<3; row++){
-     int tmpx3 = enemyX3+row*(enemyWidth+enemySpacing);
-     int tmpy3 = enemyY3+row*(enemyHeight);
-     image (enemy1, tmpx3, tmpy3);}
+   for(int i=0; i<3; i++){
+     int x= enemyA[0]-i*(enemyWidth+enemySpacing);
+     int y= enemyY3+i*(enemyHeight);
+     image(enemy1,x,y);
+     if(fighterX >= x && fighterX <= x+enemyWidth && fighterY >= y && fighterY <= y+enemyHeight){
+        hpLong -= 20;}
+      else if(fighterX+51 >= x && fighterX+51 <= x+enemyWidth && fighterY+51 >= y && fighterY+51 <= y+enemyHeight){
+        hpLong -= 20;} 
    }
    
-   if(enemyX3<(width+enemyWidth*2)){
-     for(int row=0; row<3; row++){
-     int tmpx3 = Xmoving+enemyX3+row*(enemyWidth+enemySpacing);
-     int tmpy3 = Ymoving+enemyY3+row*(enemyHeight);
-     image (enemy1, tmpx3, tmpy3);}
+   for(int i=0; i<3; i++){
+     int x= enemyA[0]-i*(enemyWidth+enemySpacing)-Xmoving;
+     int y= enemyY3+i*(enemyHeight)+Ymoving;
+     image(enemy1,x,y);
+     if(fighterX >= x && fighterX <= x+enemyWidth && fighterY >= y && fighterY <= y+enemyHeight){
+        hpLong -= 20;}
+      else if(fighterX+51 >= x && fighterX+51 <= x+enemyWidth && fighterY+51 >= y && fighterY+51 <= y+enemyHeight){
+        hpLong -= 20;} 
+   } 
+   
+   for(int i =6; i<7; i++){
+     int x= enemyA[0]-Xmoving/2;
+     int y= enemyY3+Ymoving/2;
+     image(enemy1,x,y);
+     if(fighterX >= x && fighterX <= x+enemyWidth && fighterY >= y && fighterY <= y+enemyHeight){
+        hpLong -= 20;}
+      else if(fighterX+51 >= x && fighterX+51 <= x+enemyWidth && fighterY+51 >= y && fighterY+51 <= y+enemyHeight){
+        hpLong -= 20;} 
    }
    
-   if(enemyX3<(width+enemyWidth*2)){
-     for(int row=0; row<2; row++){
-     int tmpx3 = enemyX3-row*(enemyWidth+enemySpacing);
-     int tmpy3 = enemyY3+row*(enemyHeight);
-     image (enemy1, tmpx3, tmpy3);}
+   for(int i =7; i<8; i++){
+     int x= enemyA[0]-Xmoving*3/2;
+     int y= enemyY3-Ymoving/2;
+     image(enemy1,x,y);
+     if(fighterX >= x && fighterX <= x+enemyWidth && fighterY >= y && fighterY <= y+enemyHeight){
+        hpLong -= 20;}
+      else if(fighterX+51 >= x && fighterX+51 <= x+enemyWidth && fighterY+51 >= y && fighterY+51 <= y+enemyHeight){
+        hpLong -= 20;} 
    }
    
-   if(enemyX3<(width+enemyWidth*2)){
-     for(int row=0; row<2; row++){
-     int tmpx3 = -Xmoving+enemyX3-row*(enemyWidth+enemySpacing);
-     int tmpy3 = Ymoving+enemyY3+row*(enemyHeight);
-     image (enemy1, tmpx3, tmpy3);}
-   }
-   
-    if(enemyX3>(width+enemyWidth*2)){
-   enemyY3 = floor(random(0,480-enemyHeight*5));}
-   
-   enemyX3 += enemySpeed;
-   enemyX3 %= 640+640+enemyWidth*5+enemySpacing*4+300+640*2+enemyWidth*5+enemySpacing*2;
-   
+   if(enemyA[2]>width){
+    enemyY3 = floor(random(enemyHeight*2,height-enemyHeight*5));}
+    enemyA[0] += enemySpeed;
+    enemyA[0] %= width*3+(enemyWidth*10+enemySpacing*6);
+    
+  
   
    
    
@@ -238,7 +264,14 @@ void draw(){
     image(end1,0,0);
     if (mouseX >= 204 && mouseX < 434 && mouseY >= 306 && mouseY <= 350){
       if(mousePressed){
-      gameState = GAME_RUN; fighterX = 580 ; fighterY = 240; hpLong = 50;}
+        gameState = GAME_RUN; fighterX = 580 ; fighterY = 240; hpLong = 50;
+        enemyC[4]=0;
+        enemyB[4]=-(width+enemyWidth*5+enemySpacing*4+250);
+        enemyA[2]=-(width*2+enemyWidth*5+enemySpacing*4+600);
+        enemyY1 = floor(random(0,height-enemyHeight));
+        enemyY2 = floor(random(0,height-enemyHeight*5));
+        enemyY3 = floor(random(enemyHeight*2,height-enemyHeight*5));
+      }
     }
     else{image(end2,0,0);}
     break;
